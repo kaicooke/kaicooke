@@ -3083,6 +3083,11 @@ custom
     padding-bottom: 20px;
 }
 
+.project-code {
+    margin-top: -10px;
+    font-size: 90%;
+}
+
 @media screen and (max-width: 480px) {
     .reachout-padding {
         font-size: 65px;
