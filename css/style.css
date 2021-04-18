@@ -3082,3 +3082,9 @@ custom
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
+@media screen and (max-width: 480px) {
+    .reachout-padding {
+        font-size: 65px;
+    }
+}
