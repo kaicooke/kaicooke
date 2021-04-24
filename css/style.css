@@ -3092,10 +3092,12 @@ custom
     .reachout-padding {
         font-size: 65px;
     }
+    #slide-20-layer-2,
     #slide-20-layer-11,
     #slide-27-layer-2 {
         font-size: 23px !important;
     }
+    #slide-20-layer-2,
     #slide-27-layer-2 {
         margin-left: -100px;
     }
