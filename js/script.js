@@ -1,6 +1,4 @@
-
-
-jQuery(function ($) {
+jQuery(function($) {
 
 
     "use strict";
@@ -8,13 +6,13 @@ jQuery(function ($) {
     var $window = $(window);
     var windowsize = $(window).width();
 
-    $(function () {
+    $(function() {
 
         /*===================================
                Loading Timeout
              ====================================== */
 
-        setTimeout(function () {
+        setTimeout(function() {
             $("#loader-fade").fadeOut("slow");
             $('.side-menu').removeClass('dnone');
         }, 1000);
@@ -25,11 +23,10 @@ jQuery(function ($) {
     /*=============================
          Header appear
      ==============================*/
-    $(window).on('scroll', function () {
+    $(window).on('scroll', function() {
         if ($(this).scrollTop() >= 250) { // Set position from top to add class
             $('header').addClass('header-appear');
-        }
-        else {
+        } else {
             $('header').removeClass('header-appear');
         }
     });
@@ -38,11 +35,11 @@ jQuery(function ($) {
        Side Menu
     ====================================== */
     if ($("#sidemenu_toggle").length) {
-        $("#sidemenu_toggle").on("click", function () {
+        $("#sidemenu_toggle").on("click", function() {
             $(".pushwrap").toggleClass("active");
             $(".side-menu").addClass("side-menu-active"), $("#close_side_menu").fadeIn(700);
             $("body").addClass("pushmenu-push-toLeft");
-        }), $("#close_side_menu , #btn_sideNavClose , .side-nav .navbar-nav .nav-link").on("click", function () {
+        }), $("#close_side_menu , #btn_sideNavClose , .side-nav .navbar-nav .nav-link").on("click", function() {
             $(".side-menu").removeClass("side-menu-active"), $(".pushwrap").removeClass("active"),
                 $("body").removeClass("pushmenu-push-toLeft"),
                 $("#close_side_menu").fadeOut(200);
@@ -51,10 +48,10 @@ jQuery(function ($) {
 
     if ($(".side-right-btn").length) {
 
-        $(".side-right-btn").click(function () {
-            $(".navbar.navbar-right").toggleClass('show');
-        }),
-            $(".navbar.navbar-right .navbar-nav .nav-link").click(function () {
+        $(".side-right-btn").click(function() {
+                $(".navbar.navbar-right").toggleClass('show');
+            }),
+            $(".navbar.navbar-right .navbar-nav .nav-link").click(function() {
                 $(".navbar.navbar-right").toggleClass('show');
             });
 
@@ -81,7 +78,7 @@ jQuery(function ($) {
                     Flip
       =================================== */
 
-    $(function () {
+    $(function() {
         $(".flip").flip({
             trigger: 'hover',
             axis: 'y'
@@ -103,9 +100,9 @@ jQuery(function ($) {
            Nav Scroll
            ====================================== */
 
-    $(".scroll").on("click", function (event) {
+    $(".scroll").on("click", function(event) {
         event.preventDefault();
-        $('html,body').animate({scrollTop: $(this.hash).offset().top - 55}, 700);
+        $('html,body').animate({ scrollTop: $(this.hash).offset().top - 55 }, 700);
     });
 
 
@@ -114,7 +111,7 @@ jQuery(function ($) {
      ====================================== */
     $(".faq-items > li:first-child .sub-items").fadeIn();
     $(".faq-items > li:first-child >").addClass("expanded");
-    $(".faq-items > li > a").on('click', function (e) {
+    $(".faq-items > li > a").on('click', function(e) {
         e.preventDefault();
         var $this = $(this);
         if ($this.hasClass("expanded")) {
@@ -128,106 +125,109 @@ jQuery(function ($) {
     });
 
     /*----- Tabs init -----*/
-    if ($(".tab-to-accordion").length){
+    if ($(".tab-to-accordion").length) {
         initTabsToAccordion();
+    }
+
+    function initTabsToAccordion() {
+        var animSpeed = 500;
+        var win = $(window);
+        var isAccordionMode = true;
+        var tabWrap = $(".tab-to-accordion");
+        var tabContainer = tabWrap.find(".tab-container");
+        var tabItem = tabContainer.children("div[id]");
+        var tabsetList = tabWrap.find(".tabset-list");
+        var tabsetLi = tabsetList.find("li");
+        var tabsetItem = tabsetList.find("a");
+        var activeId = tabsetList
+            .find(".active")
+            .children()
+            .attr("href");
+        cloneTabsToAccordion();
+        accordionMode();
+        tabsToggle();
+        hashToggle();
+        win.on("resize orientationchange", accordionMode);
+
+        function cloneTabsToAccordion() {
+            $(tabsetItem).each(function() {
+                var $this = $(this);
+                var activeClass = $this.parent().hasClass("active");
+                var listItem = $this.attr("href");
+                var listTab = $(listItem);
+                if (activeClass) {
+                    var activeClassId = listItem;
+                    listTab.show();
+                }
+                var itemContent = $this.clone();
+                var itemTab = $this.attr("href");
+                if (activeClassId) {
+                    itemContent
+                        .insertBefore(itemTab)
+                        .wrap('<div class="accordion-item active"></div>');
+                } else {
+                    itemContent
+                        .insertBefore(itemTab)
+                        .wrap('<div class="accordion-item"></div>');
+                }
+            });
         }
 
-function initTabsToAccordion() {
-    var animSpeed = 500;
-    var win = $(window);
-    var isAccordionMode = true;
-    var tabWrap = $(".tab-to-accordion");
-    var tabContainer = tabWrap.find(".tab-container");
-    var tabItem = tabContainer.children("div[id]");
-    var tabsetList = tabWrap.find(".tabset-list");
-    var tabsetLi = tabsetList.find("li");
-    var tabsetItem = tabsetList.find("a");
-    var activeId = tabsetList
-        .find(".active")
-        .children()
-        .attr("href");
-    cloneTabsToAccordion();
-    accordionMode();
-    tabsToggle();
-    hashToggle();
-    win.on("resize orientationchange", accordionMode);
-
-    function cloneTabsToAccordion() {
-        $(tabsetItem).each(function () {
-            var $this = $(this);
-            var activeClass = $this.parent().hasClass("active");
-            var listItem = $this.attr("href");
-            var listTab = $(listItem);
-            if (activeClass) {
-                var activeClassId = listItem;
-                listTab.show();
-            }
-            var itemContent = $this.clone();
-            var itemTab = $this.attr("href");
-            if (activeClassId) {
-                itemContent
-                    .insertBefore(itemTab)
-                    .wrap('<div class="accordion-item active"></div>');
+        function accordionMode() {
+            var liWidth = Math.round(tabsetLi.outerWidth());
+            var liCount = tabsetLi.length;
+            var allLiWidth = liWidth * liCount;
+            var tabsetListWidth = tabsetList.outerWidth();
+            if (tabsetListWidth <= allLiWidth) {
+                isAccordionMode = true;
+                tabWrap.addClass("accordion-mod");
             } else {
-                itemContent
-                    .insertBefore(itemTab)
-                    .wrap('<div class="accordion-item"></div>');
+                isAccordionMode = false;
+                tabWrap.removeClass("accordion-mod");
             }
-        });
-    }
-    function accordionMode() {
-        var liWidth = Math.round(tabsetLi.outerWidth());
-        var liCount = tabsetLi.length;
-        var allLiWidth = liWidth * liCount;
-        var tabsetListWidth = tabsetList.outerWidth();
-        if (tabsetListWidth <= allLiWidth) {
-            isAccordionMode = true;
-            tabWrap.addClass("accordion-mod");
-        } else {
-            isAccordionMode = false;
-            tabWrap.removeClass("accordion-mod");
         }
-    }
-    function tabsToggle() {
-        tabItem.hide();
-        $(activeId).show();
-        $(tabWrap).on("click", 'a[href^="#tab"]', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var activeId = $this.attr("href");
+
+        function tabsToggle() {
+            tabItem.hide();
+            $(activeId).show();
+            $(tabWrap).on("click", 'a[href^="#tab"]', function(e) {
+                e.preventDefault();
+                var $this = $(this);
+                var activeId = $this.attr("href");
+                var activeTabSlide = $(activeId);
+                var activeOpener = tabWrap.find('a[href="' + activeId + '"]');
+                $('a[href^="#tab"]')
+                    .parent()
+                    .removeClass("active");
+                activeOpener.parent().addClass("active");
+                if (isAccordionMode) {
+                    tabItem.stop().slideUp(animSpeed);
+                    activeTabSlide.stop().slideDown(animSpeed);
+                } else {
+                    tabItem.fadeOut(300);
+                    activeTabSlide.fadeIn(800);
+                }
+            });
+        }
+
+        function hashToggle() {
+            var hash = location.hash;
+            var activeId = hash;
             var activeTabSlide = $(activeId);
             var activeOpener = tabWrap.find('a[href="' + activeId + '"]');
-            $('a[href^="#tab"]')
-                .parent()
-                .removeClass("active");
-            activeOpener.parent().addClass("active");
-            if (isAccordionMode) {
-                tabItem.stop().slideUp(animSpeed);
-                activeTabSlide.stop().slideDown(animSpeed);
-            } else {
-                tabItem.fadeOut(300);
-                activeTabSlide.fadeIn(800);
+            if ($(hash).length > 0) {
+                $('a[href^="#tab"]')
+                    .parent()
+                    .removeClass("active");
+                activeOpener.parent().addClass("active");
+                tabItem.hide();
+                activeTabSlide.show();
+                win
+                    .scrollTop(activeTabSlide.offset().top)
+                    .scrollLeft(activeTabSlide.offset().left);
             }
-        });
-    }
-    function hashToggle() {
-        var hash = location.hash;
-        var activeId = hash;
-        var activeTabSlide = $(activeId);
-        var activeOpener = tabWrap.find('a[href="' + activeId + '"]');
-        if ($(hash).length > 0) {
-            $('a[href^="#tab"]')
-                .parent()
-                .removeClass("active");
-            activeOpener.parent().addClass("active");
-            tabItem.hide();
-            activeTabSlide.show();
-            win
-                .scrollTop(activeTabSlide.offset().top)
-                .scrollLeft(activeTabSlide.offset().left);
         }
     }
-}
 
 
     /* ===================================
@@ -236,18 +236,18 @@ function initTabsToAccordion() {
     $("#blog-slider").owlCarousel({
         items: 1,
         dots: false,
-        autoplay:true,
-        autoplayTimeout:5000,
-        smartSpeed:500,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        smartSpeed: 500,
         nav: false,
         loop: true,
     });
     $("#blog-slider-1").owlCarousel({
         items: 1,
         dots: false,
-        autoplay:true,
-        autoplayTimeout:6000,
-        smartSpeed:600,
+        autoplay: true,
+        autoplayTimeout: 6000,
+        smartSpeed: 600,
         nav: false,
         loop: true,
     });
@@ -261,22 +261,22 @@ function initTabsToAccordion() {
     /* ===================================
            About Box Hover Setting
            ====================================== */
-    $(".blog-image").on("mouseenter", function () {
+    $(".blog-image").on("mouseenter", function() {
         $(".date").addClass("date-hvr");
     })
 
-    $(".blog-image").on("mouseleave", function () {
+    $(".blog-image").on("mouseleave", function() {
         $(".date").removeClass("date-hvr");
     })
 
     /*======================
             date-2
      =====================*/
-    $(".blog-image2").on("mouseenter", function () {
+    $(".blog-image2").on("mouseenter", function() {
         $(".date-2").addClass("date-2-hvr");
     })
 
-    $(".blog-image2").on("mouseleave", function () {
+    $(".blog-image2").on("mouseleave", function() {
         $(".date-2").removeClass("date-2-hvr");
     })
 
@@ -317,7 +317,7 @@ function initTabsToAccordion() {
         cssEase: 'linear',
         fade: true,
         dots: true,
-        arrows:false,
+        arrows: false,
         autoplay: false,
         draggable: false,
         asNavFor: ".client-thumbnails>div",
@@ -329,7 +329,7 @@ function initTabsToAccordion() {
         slidesToScroll: 1,
         cssEase: 'linear',
         autoplay: true,
-        arrows:false,
+        arrows: false,
         centerMode: true,
         draggable: false,
         focusOnSelect: true,
@@ -342,7 +342,7 @@ function initTabsToAccordion() {
         dots: true,
         autoplayHoverPause: true,
         autoplay: true,
-        arrows:false,
+        arrows: false,
         mouseDrag: true,
         margin: 30,
         navText: [
@@ -366,77 +366,77 @@ function initTabsToAccordion() {
     });
 
 
-// Go to Top
-    $(function(){
+    // Go to Top
+    $(function() {
         // Scroll Event
-        $(window).on('scroll', function(){
+        $(window).on('scroll', function() {
             var scrolled = $(window).scrollTop();
             if (scrolled > 600) $('.go-top').addClass('active');
             if (scrolled < 600) $('.go-top').removeClass('active');
         });
         // Click Event
         $('.go-top').on('click', function() {
-            $("html, body").animate({ scrollTop: "0" },  500);
+            $("html, body").animate({ scrollTop: "0" }, 500);
         });
     });
 
 
 
-/*====================================
-            da-thumb
-*====================================*/
+    /*====================================
+                da-thumb
+    *====================================*/
     $(function() {
 
-        $('.da-thumbs > .menu-price ').each( function() { $(this).hoverdir(); } );
+        $('.da-thumbs > .menu-price ').each(function() { $(this).hoverdir(); });
 
     });
 
-/*
-    // Portfolio three column
-    $('#js-grid-mosaic-flat').cubeportfolio({
-        filters: '#js-filters-mosaic-flat',
-        layoutMode: 'mosaic',
-        defaultFilter: '*',
-        animationType: "scaleSides",
-        gapHorizontal: 0,
-        gapVertical: 0,
-        gridAdjustment: 'responsive',
-        caption: 'zoom',
-        displayType: 'fadeIn',
-        displayTypeSpeed: 100,
-        sortByDimension: true,
-        mediaQueries: [{
-            width: 1500,
-            cols: 3
-        }, {
-            width: 1100,
-            cols: 4
-        }, {
-            width: 768,
-            cols: 2
-        }, {
-            width: 480,
-            cols: 1
-        }, {
-            width: 320,
-            cols: 1
-        }],
+    /*
+        // Portfolio three column
+        $('#js-grid-mosaic-flat').cubeportfolio({
+            filters: '#js-filters-mosaic-flat',
+            layoutMode: 'mosaic',
+            defaultFilter: '*',
+            animationType: "scaleSides",
+            gapHorizontal: 0,
+            gapVertical: 0,
+            gridAdjustment: 'responsive',
+            caption: 'zoom',
+            displayType: 'fadeIn',
+            displayTypeSpeed: 100,
+            sortByDimension: true,
+            mediaQueries: [{
+                width: 1500,
+                cols: 3
+            }, {
+                width: 1100,
+                cols: 4
+            }, {
+                width: 768,
+                cols: 2
+            }, {
+                width: 480,
+                cols: 1
+            }, {
+                width: 320,
+                cols: 1
+            }],
 
-        // lightbox
-        lightboxDelegate: '.cbp-lightbox',
-        lightboxGallery: true,
-        lightboxTitleSrc: 'data-title',
-        lightboxCounter: '<div class="cbp-popup-lightbox-counter">{{current}} of {{total}}</div>',
+            // lightbox
+            lightboxDelegate: '.cbp-lightbox',
+            lightboxGallery: true,
+            lightboxTitleSrc: 'data-title',
+            lightboxCounter: '<div class="cbp-popup-lightbox-counter">{{current}} of {{total}}</div>',
 
-        plugins: {
-            loadMore: {
-                element: '#js-loadMore-mosaic-flat',
-                action: 'click',
-                loadItems: 3
+            plugins: {
+                loadMore: {
+                    element: '#js-loadMore-mosaic-flat',
+                    action: 'click',
+                    loadItems: 3
+                }
             }
-        }
-    })
-    */
+        })
+        */
 
 
     /* ===================================
@@ -449,23 +449,23 @@ function initTabsToAccordion() {
     });
 
 
-/*=======================================
-        Number Scrolling
-* ======================================*/
+    /*=======================================
+            Number Scrolling
+    * ======================================*/
 
-$(".counter").appear(function () {
-    $('.num-scrolling').each(function () {
-        $(this).prop('Counter', 0).animate({
-            Counter: $(this).text()
-        }, {
-            duration: 5000,
-            easing: 'swing',
-            step: function (now) {
-                $(this).text(Math.ceil(now));
-            }
+    $(".counter").appear(function() {
+        $('.num-scrolling').each(function() {
+            $(this).prop('Counter', 0).animate({
+                Counter: $(this).text()
+            }, {
+                duration: 5000,
+                easing: 'swing',
+                step: function(now) {
+                    $(this).text(Math.ceil(now));
+                }
+            });
         });
     });
-});
 
 
 
@@ -476,20 +476,20 @@ $(".counter").appear(function () {
                 Medical form
        =================================== */
 
-//
+    //
     $(".datepicker").datepicker({
         dateFormat: 'yy-mm-dd',
         showAnim: 'slideDown'
     });
-//Select-2
+    //Select-2
     $('.js-example-basic-single').select2();
 
 
 
     //blog heading
-    $('.blog-para').on('mouseenter' , function () {
-      $(this).parent().parent().find('.img-blog img').addClass('scale');
-    }).on('mouseleave' , function () {
+    $('.blog-para').on('mouseenter', function() {
+        $(this).parent().parent().find('.img-blog img').addClass('scale');
+    }).on('mouseleave', function() {
         $(this).parent().parent().find('.img-blog img').removeClass('scale');
     });
 
@@ -519,16 +519,16 @@ $(".counter").appear(function () {
     //     console.log(index);
     // });
 
-// Team Slider
+    // Team Slider
 
     $("#team-carousel").owlCarousel({
         items: 1,
         dots: true,
         nav: false,
         autoplay: true,
-        smartSpeed:500,
-        autoplayHoverPause:true,
-        loop:true,
+        smartSpeed: 500,
+        autoplayHoverPause: true,
+        loop: true,
 
         responsive: {
             992: {
@@ -583,7 +583,7 @@ $(".counter").appear(function () {
         direction: 'vertical',
         allowTouchMove: false,
         reverseDirection: true,
-        initialSlide: ($('#swiper-img .swiper-slide').siblings().length-1)
+        initialSlide: ($('#swiper-img .swiper-slide').siblings().length - 1)
     });
     //sync swiper
     var swiperTxt = new Swiper('#swiper-text', {
@@ -597,13 +597,13 @@ $(".counter").appear(function () {
             disableOnInteraction: false,
         },
     });
-    swiperTxt.on('slideChangeTransitionStart', function () {
+    swiperTxt.on('slideChangeTransitionStart', function() {
         let index = swiperTxt.realIndex;
         let total = swiperTxt.slides.length;
-        index = total - index -1;
+        index = total - index - 1;
         swiperImg.slideTo(index, 300, false);
     });
-    if($(window).width() < 767){
+    if ($(window).width() < 767) {
         swiperTxt.changeDirection('horizontal');
         swiperImg.changeDirection('horizontal');
     }
@@ -618,7 +618,7 @@ $(".counter").appear(function () {
         dots: true,
         autoplayHoverPause: true,
         autoplay: true,
-        arrows:false,
+        arrows: false,
         mouseDrag: true,
         margin: 30,
         navText: [
@@ -649,14 +649,14 @@ $(".counter").appear(function () {
 
 
     /*----- counter js ----*/
-    $(".demo-banner").appear(function () {
-        $('.count').each(function () {
+    $(".demo-banner").appear(function() {
+        $('.count').each(function() {
             $(this).prop('Counter', 0).animate({
                 Counter: $(this).text()
             }, {
                 duration: 5000,
                 easing: 'swing',
-                step: function (now) {
+                step: function(now) {
                     $(this).text(Math.ceil(now));
                 }
             });
