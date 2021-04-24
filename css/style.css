@@ -3088,6 +3088,10 @@ custom
     font-size: 90%;
 }
 
+.webcats li a>span {
+    width: 60px;
+}
+
 @media screen and (max-width: 480px) {
     .reachout-padding {
         font-size: 65px;
