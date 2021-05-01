@@ -3067,6 +3067,10 @@ form.findus textarea {
 custom
 **/
 
+.offer-list {
+    color: #2c3459;
+}
+
 .swiper-pagination-bullets {
     display: none;
 }
