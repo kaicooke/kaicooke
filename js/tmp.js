@@ -22,7 +22,7 @@ for (var i = 0; i < links.length; i++) {
 //===
 /* 
 
-https://docs.google.com/spreadsheets/d/1DMXFj-xB0I7aeEc4a9q6TvfKp5UoVxK9K_HE_LfzVM4/edit#gid=0
+
 
 */
 var leads = document.querySelectorAll('.result-lockup > div.result-lockup__profile-info.flex.flex-column > div > dl');
@@ -46,9 +46,16 @@ setTimeout(function() {
                 let url = lead.querySelector('.result-lockup__name a').href.trim();
                 let position = lead.querySelector('.result-lockup__highlight-keyword > span').innerText.trim();
                 let company = lead.querySelector('.result-lockup__position-company > a > span').innerText.trim();
-                let yearsInPosition = lead.querySelector('dd:nth-child(4)').innerText.trim();
+                let yearsExperience = lead.querySelector('dd:nth-child(4)').innerText.trim();
+                let yearsInPosition = yearsExperience.split(" ");
+                let yearsInCurrentPosition = 0;
+                if (yearsInPosition.length > 1) {
+                    yearsInCurrentPosition = yearsInPosition[0];
+                }
+
                 let location = lead.querySelector('dd:nth-child(5)').innerText.trim();
-                console.log("\t" + name + "\t" + position + "\t" + company + "\t" + url + "\t" + yearsInPosition + "\t" + location)
+                console.log("\t" + name + "\t" + position + "\t" + company + "\t" + url + "\t" + yearsInCurrentPosition + "\t" + yearsExperience + "\t" + location)
+                    //"\t" + name + "\t" + position + "\t" + company + "\t" + url + "\t" + yearsInCurrentPosition + "\t" + yearsExperience + "\t" + location
             }
         }
     }
