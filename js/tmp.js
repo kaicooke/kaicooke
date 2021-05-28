@@ -22,12 +22,12 @@ for (var i = 0; i < links.length; i++) {
 //===
 /* 
 
-
+sn leads
 
 */
-var leads = document.querySelectorAll('.result-lockup > div.result-lockup__profile-info.flex.flex-column > div > dl');
 window.scrollTo(0, document.body.scrollHeight);
 setTimeout(function() {
+    var leads = document.querySelectorAll('.result-lockup > div.result-lockup__profile-info.flex.flex-column > div > dl');
     for (var i = 0; i < leads.length; i++) {
         let lead = leads[i];
         if (lead) {
@@ -60,3 +60,31 @@ setTimeout(function() {
         }
     }
 }, 2000);
+
+
+
+
+// events
+
+
+var out = function() {
+    window.scrollTo(0, document.body.scrollHeight);
+    setTimeout(function() {
+        var events = document.querySelectorAll('.entity-result');
+        let next = document.querySelector('.artdeco-pagination__button--next');
+        for (var i = 0; i < events.length; i++) {
+            let event = events[i];
+            if (event) {
+                let link = event.querySelectorAll('.app-aware-link')[1].href;
+                let title = event.querySelectorAll('.app-aware-link')[1].innerText;
+                let date = event.querySelector('.entity-result__primary-subtitle').innerText;
+                let nr = event.querySelector('.entity-result__simple-insight-text').innerText.trim().split(' ')[0];
+                if (parseInt(nr.replaceAll(",", "")) < 50) {
+                    //console.clear();
+                    console.log("\t" + date + "\t" + nr + "\t" + title + "\t" + link);
+                }
+            }
+        }
+        next.click();
+    }, 500);
+}
