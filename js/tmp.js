@@ -70,7 +70,7 @@ setTimeout(function() {
 var out = function() {
     window.scrollTo(0, document.body.scrollHeight);
     setTimeout(function() {
-        var events = document.querySelectorAll('.entity-result');
+        let events = document.querySelectorAll('.entity-result');
         let next = document.querySelector('.artdeco-pagination__button--next');
         for (var i = 0; i < events.length; i++) {
             let event = events[i];
@@ -78,13 +78,23 @@ var out = function() {
                 let link = event.querySelectorAll('.app-aware-link')[1].href;
                 let title = event.querySelectorAll('.app-aware-link')[1].innerText;
                 let date = event.querySelector('.entity-result__primary-subtitle').innerText;
+                if (date.split("-").length > 1) {
+                    date = date.split("-")[0];
+                }
+                let parsedate = date.split(" ");
+                if (parsedate.length == 6) {
+                    parsedate.pop();
+                }
+                let cleaneddate = parsedate.join();
+                cleaneddate = cleaneddate.replaceAll(",AM", "").replaceAll(",PM", "").replaceAll(",,", ",")
+                let time = new Date(cleaneddate).getTime();
                 let nr = event.querySelector('.entity-result__simple-insight-text').innerText.trim().split(' ')[0];
                 if (parseInt(nr.replaceAll(",", "")) < 50) {
                     //console.clear();
-                    console.log("\t" + date + "\t" + nr + "\t" + title + "\t" + link);
+                    console.log("\t" + time + "\t" + date + "\t" + nr + "\t" + title + "\t" + link);
                 }
             }
         }
         next.click();
-    }, 500);
+    }, 2000);
 }
